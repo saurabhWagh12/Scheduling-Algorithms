@@ -5,6 +5,7 @@ typedef struct Process{
     int burst;
     int arrival;
     int priority;
+    int holdBurst;
     int tat;
     int wt;
 }P;
@@ -12,14 +13,15 @@ typedef struct Process{
 void initialize(P* p,int b,int a,int pd){
     p->burst = b;
     p->arrival = a;
+    p->holdBurst = b;
     p->priority = pd;
     p->tat = 0;
     p->wt = 0;
 }
 
 int main(){
-    P parr[4];
-    int done[4];
+    P parr[5];
+    int done[5];
 
     for(int i=0;i<sizeof(parr)/sizeof(parr[0]);i++){
         done[i] = 0;
@@ -90,10 +92,14 @@ int main(){
             }
             if(moving->burst!=0){
                 moving->burst--;
+                int oldTotal = total;
                 lastArrival++; total++;
 
                 if(arr[movingIDX].burst==0){
                     done[movingIDX] = 1;
+                    arr[movingIDX].tat = total-arr[movingIDX].arrival;
+                    arr[movingIDX].wt = arr[movingIDX].tat-arr[movingIDX].holdBurst;
+                    
                     //set new moving
                     P p;
                     initialize(&p,999,0,999);
@@ -143,22 +149,26 @@ int main(){
             }
         }
 
+        int oldTotal = total;
         total+=moving->burst;
         moving->burst=0;
         done[movingIDX]=1;
+        arr[movingIDX].tat = total-arr[movingIDX].arrival;
+        arr[movingIDX].wt = arr[movingIDX].tat - arr[movingIDX].holdBurst;
     }
 
 
     printf("\n\n%d\n\n",total);
-    // float avgTAT=0,avgWT=0;
+    float avgTAT=0,avgWT=0;
     for(int i=0;i<n;i++){
-    //     printf("for Process (%d) => TAT: %d\t, WT: %d\n",i,parr[i].tat,parr[i].wt);
-    //     avgTAT+=parr[i].tat;
-    //     avgWT+=parr[i].wt;
-    printf("%d\n",arr[i].burst);
+        avgTAT+=(float)arr[i].tat;
+        printf("TAT: %d\t",arr[i].tat);
+        avgWT+=(float)arr[i].wt;
+        printf("WT: %d\n",arr[i].wt);
+
     }
 
-    // printf("\nAverage TAT: %.3f  and  Average WT: %.3f",avgTAT/n,avgWT/n);
+    printf("\nAverage TAT: %.3f  and  Average WT: %.3f",avgTAT/n,avgWT/n);
   return 0;
 }
 
