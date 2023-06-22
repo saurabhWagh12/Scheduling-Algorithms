@@ -16,8 +16,8 @@ void initialize(P* p,int b,int a){
 }
 
 int main(){
-    P parr[4];
-    int done[4];
+    P parr[5];
+    int done[5];
 
     for(int i=0;i<sizeof(parr)/sizeof(parr[0]);i++){
         done[i] = 0;
@@ -67,6 +67,10 @@ int main(){
     int movingIDX=0;
 
     int toReach = arr[n-1].arrival;
+    if(arr[0].arrival!=0){
+        lastArrival+=arr[0].arrival;
+        total+=arr[0].arrival;
+    }
 
     while(lastArrival != toReach){
 
