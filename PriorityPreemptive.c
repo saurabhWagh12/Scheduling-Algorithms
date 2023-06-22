@@ -4,20 +4,22 @@
 typedef struct Process{
     int burst;
     int arrival;
+    int priority;
     int tat;
     int wt;
 }P;
 
-void initialize(P* p,int b,int a){
+void initialize(P* p,int b,int a,int pd){
     p->burst = b;
     p->arrival = a;
+    p->priority = pd;
     p->tat = 0;
     p->wt = 0;
 }
 
 int main(){
-    P parr[5];
-    int done[5];
+    P parr[4];
+    int done[4];
 
     for(int i=0;i<sizeof(parr)/sizeof(parr[0]);i++){
         done[i] = 0;
@@ -25,10 +27,10 @@ int main(){
 
     //setting Up Processes data :
     for(int i=0;i<sizeof(parr)/sizeof(parr[0]);i++){
-        printf("Enter Burst and Arrival for process P%d :=> ",i);
-        int b,a;
-        scanf("%d %d",&b,&a);
-        initialize(&parr[i],b,a);
+        printf("Enter Burst , Arrival and Priority for process P%d :=> ",i);
+        int b,a,pd;
+        scanf("%d %d %d",&b,&a,&pd);
+        initialize(&parr[i],b,a,pd);
     }
 
    int total=0;
@@ -81,7 +83,7 @@ int main(){
         }else{
             for(int i=0;i<n;i++){
                 if(done[i]!=1)
-                if(lastArrival>=arr[i].arrival && moving->burst>arr[i].burst){
+                if(lastArrival>=arr[i].arrival && moving->priority>arr[i].priority){
                     moving = &arr[i];
                     movingIDX = i;
                 }
@@ -94,12 +96,12 @@ int main(){
                     done[movingIDX] = 1;
                     //set new moving
                     P p;
-                    initialize(&p,999,0);
+                    initialize(&p,999,0,999);
                     moving = &p;
                     movingIDX=-1;
                     for(int i=0;i<n;i++){
                         if(done[i]!=1 && lastArrival>=arr[i].arrival){
-                            if(moving->burst>arr[i].burst){
+                            if(moving->priority>arr[i].priority){
                                 moving = &arr[i];
                                 movingIDX = i;
                             }
@@ -129,12 +131,12 @@ int main(){
         }
 
         P p;
-        initialize(&p,999,0);
+        initialize(&p,999,0,999);
         moving = &p;
         movingIDX=-1;
         for(int i=0;i<n;i++){
             if(done[i]!=1 && lastArrival>=arr[i].arrival){
-                if(moving->burst>arr[i].burst){
+                if(moving->priority>arr[i].priority){
                     moving = &arr[i];
                     movingIDX = i;
                 }
@@ -155,7 +157,6 @@ int main(){
     //     avgWT+=parr[i].wt;
     printf("%d\n",arr[i].burst);
     }
-    // printf("\n%d P3 ka burst",arr[n-1].burst);
 
     // printf("\nAverage TAT: %.3f  and  Average WT: %.3f",avgTAT/n,avgWT/n);
   return 0;
