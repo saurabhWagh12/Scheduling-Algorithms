@@ -107,6 +107,7 @@ int main() {
     int total = 0,pcount=0;
     total+=arr[0].arrival;
     addNode(&head,&arr[0]);
+    printf("\n\n");
 
     while(pcount!=n){
         Node* moving = removeNode(&head);
@@ -123,6 +124,17 @@ int main() {
             moving->p.burst=0;
             done[Idx] = 1;
 
+            //Finding In actual array
+            int duplicateIdx;
+            for(int i=0;i<n;i++){
+            if(parr[i].arrival==arr[Idx].arrival && parr[i].holdBurst==arr[Idx].holdBurst){
+                duplicateIdx = i;
+            }
+            }
+
+            printf("P%d = %d-%d\t\t",duplicateIdx,old,total);
+
+
             arr[Idx].tat = total-arr[Idx].arrival;
             arr[Idx].wt = arr[Idx].tat - arr[Idx].holdBurst;
 
@@ -136,6 +148,15 @@ int main() {
             int old = total;
             total+=quantum;
             moving->p.burst-=quantum;
+
+            int duplicateIdx;
+            for(int i=0;i<n;i++){
+            if(parr[i].arrival==arr[Idx].arrival && parr[i].holdBurst==arr[Idx].holdBurst){
+                duplicateIdx = i;
+            }
+            }
+            printf("P%d = %d-%d\t\t",duplicateIdx,old,total);
+
             // if(){
                 for(int i=0;i<n;i++){
                     if(arr[i].arrival<=total && arr[i].arrival>=old && done[i]!=1 && i!=Idx){
@@ -149,6 +170,7 @@ int main() {
             }else if(moving->p.burst==0){
                 pcount++;
                 done[Idx] = 1;
+
                 arr[Idx].tat = total-arr[Idx].arrival;
                 arr[Idx].wt = arr[Idx].tat - arr[Idx].holdBurst;
             }
@@ -157,7 +179,7 @@ int main() {
     }
 
 
-printf("ANSWER: %d\n\n",total);
+printf("\n\nANSWER: %d\n\n",total);
 
 int avgTAT=0,avgWT=0;
 for(int i=0;i<n;i++){
@@ -170,16 +192,6 @@ printf("\n\nTAT average:%.3f\t WT average: %.3f",(float)avgTAT/n,(float)avgWT/n)
 
 
 
-
-
-
-    // Free allocated memory
-    // Node* current = head;
-    // while (current != NULL) {
-    //     Node* next = current->next;
-    //     free(current);
-    //     current = next;
-    // }
 
     return 0;
 }
