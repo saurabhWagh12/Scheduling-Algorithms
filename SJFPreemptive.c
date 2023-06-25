@@ -18,8 +18,8 @@ void initialize(P* p,int b,int a){
 }
 
 int main(){
-    P parr[5];
-    int done[5];
+    P parr[3];
+    int done[3];
 
     for(int i=0;i<sizeof(parr)/sizeof(parr[0]);i++){
         done[i] = 0;
