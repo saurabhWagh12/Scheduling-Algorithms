@@ -66,6 +66,7 @@ int main(){
 
             parr[idx].tat = total-parr[idx].arrival;
             parr[idx].wt = parr[idx].tat-parr[idx].burst;
+            
             done[idx]=1;
             printf("P%d-> %d-%d\t\t",idx,old,total);
         }

@@ -18,8 +18,8 @@ void initialize(P* p,int b,int a,int pb){
 }
 
 int main(){
-    P parr[3];
-    int done[3];
+    P parr[7];
+    int done[7];
 
     for(int i=0;i<sizeof(parr)/sizeof(parr[0]);i++){
         done[i] = 0;
@@ -51,17 +51,19 @@ int main(){
    }
 
     printf("\n");
+    int x;
         total = arr[0].arrival+arr[0].burst;
         for(int i=0;i<n;i++){
             if(parr[i].arrival == arr[0].arrival && parr[i].priority == arr[0].priority){
                 parr[0].tat = total-parr[0].arrival; 
                 parr[0].wt = parr[0].tat-parr[0].burst;
+                x =i;
             }
         }
 
     //Actual Logic:
     printf("Gantt Chart: \n");
-    printf("P0: 0-%d\t\t",total); 
+    printf("P%d: 0-%d\t\t",x,total); 
     int pcount=0;
     while(pcount!=n-1){
         int hold=999;
@@ -86,8 +88,8 @@ int main(){
 
             for(int i=0;i<n;i++){
                 if(parr[i].arrival == arr[idx].arrival && parr[i].priority == arr[idx].priority){
-                    parr[idx].tat = total-parr[idx].arrival; 
-                    parr[idx].wt = parr[idx].tat-parr[idx].burst;
+                    parr[i].tat = total-parr[i].arrival; 
+                    parr[i].wt = parr[i].tat-parr[i].burst;
                 }
             }
             printf("P%d: %d-%d\t",idx,dash,total); 
