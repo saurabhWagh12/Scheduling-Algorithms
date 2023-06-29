@@ -72,8 +72,8 @@ int main(){
 
         for(int i=1;i<n;i++){
             if(done[i]!=1 && arr[i].arrival<=total){
-                if(hold>arr[i].burst){
-                    hold = arr[i].burst;
+                if(hold>arr[i].priority){
+                    hold = arr[i].priority;
                     idx = i; prevProcess = i;
                 }
             }
@@ -82,7 +82,7 @@ int main(){
         //Found Process 
         if(hold!=999){
             int dash = total;
-            total+=hold;
+            total+=arr[idx].burst;
             done[idx] = 1;
             pcount++;
 
