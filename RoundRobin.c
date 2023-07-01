@@ -68,8 +68,8 @@ void display(Node** head) {
 int main() {
     Node* head = NULL;
 
-    P parr[5];
-    int done[5];
+    P parr[4];
+    int done[4];
     int quantum = 0;
     int n = sizeof(parr) / sizeof(parr[0]);
     printf("Enter Time Quantum for Round Robin: ");
@@ -118,7 +118,7 @@ int main() {
             }
         }
 
-        if(quantum>moving->p.burst){
+        if(quantum>=moving->p.burst){
             int old = total;
             total+=moving->p.burst;
             moving->p.burst=0;
@@ -140,7 +140,7 @@ int main() {
 
             pcount++;
             for(int i=0;i<n;i++){
-                    if(arr[i].arrival<=total && arr[i].arrival>=old && done[i]!=1 && i!=Idx){
+                    if(arr[i].arrival<=total && arr[i].arrival>old && done[i]!=1 && i!=Idx){
                         addNode(&head,&arr[i]);
                     }
                 }
@@ -159,7 +159,7 @@ int main() {
 
             // if(){
                 for(int i=0;i<n;i++){
-                    if(arr[i].arrival<=total && arr[i].arrival>=old && done[i]!=1 && i!=Idx){
+                    if(arr[i].arrival<=total && arr[i].arrival>old && done[i]!=1 && i!=Idx){
                         addNode(&head,&arr[i]);
                     }
                 }
