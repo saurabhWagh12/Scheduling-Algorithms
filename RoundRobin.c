@@ -140,7 +140,7 @@ int main() {
 
             pcount++;
             for(int i=0;i<n;i++){
-                    if(arr[i].arrival<=total && arr[i].arrival>=old && done[i]!=1 && i!=Idx){
+                    if(arr[i].arrival<=total && arr[i].arrival>old && done[i]!=1 && i!=Idx){
                         addNode(&head,&arr[i]);
                     }
                 }
@@ -159,7 +159,7 @@ int main() {
 
             // if(){
                 for(int i=0;i<n;i++){
-                    if(arr[i].arrival<=total && arr[i].arrival>=old && done[i]!=1 && i!=Idx){
+                    if(arr[i].arrival<=total && arr[i].arrival>old && done[i]!=1 && i!=Idx){
                         addNode(&head,&arr[i]);
                     }
                 }
